@@ -2,15 +2,16 @@ package handler
 
 import (
 	"errors"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/model"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/services"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/services"
+	model2 "github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/utils"
 	"github.com/andrepriyanto10/favaa_mitra/utils"
 	"github.com/gofiber/fiber/v2"
 	"net/http"
 )
 
 type AuthHandler struct {
-	model.UserService
+	authentication.UserService
 }
 
 func NewAuthHandler(service *services.AuthService) AuthHandler {
@@ -25,7 +26,7 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 		return utils.Response(c, http.StatusMethodNotAllowed, "Method Not Allowed", nil)
 	}
 
-	userRequest := new(model.UserRegisterReq)
+	userRequest := new(model2.UserRegisterReq)
 
 	// body parsing
 	if err := c.BodyParser(userRequest); err != nil {
@@ -47,7 +48,7 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 		return utils.Response(c, http.StatusMethodNotAllowed, "Method Not Allowed", nil)
 	}
 
-	var userRequest model.LoginUserRequest
+	var userRequest model2.LoginUserRequest
 
 	// body parsing
 	if err := c.BodyParser(&userRequest); err != nil {
@@ -60,7 +61,7 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 	if errors.As(err, &customErr) {
 		return utils.Response(c, customErr.Code, customErr.Message, nil)
 	}
-	
+
 	err = utils.ComparePassword(userByEmail.Password, userRequest.Password)
 	if err != nil {
 		return utils.Response(c, http.StatusUnauthorized, "Unauthorized", nil)

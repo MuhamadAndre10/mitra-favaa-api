@@ -2,7 +2,9 @@ package database
 
 import (
 	"fmt"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/model"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain/partner"
+	model2 "github.com/andrepriyanto10/favaa_mitra/internal/model"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -40,7 +42,7 @@ func OpenConnection(cfg *viper.Viper) (*gorm.DB, error) {
 
 	log.Println("Migrating database...")
 
-	err = db.AutoMigrate(&model.UserAccounts{}, &model.Customers{}, &model.Address{})
+	err = db.AutoMigrate(&authentication.UserAccounts{}, &model2.Customers{}, &partner.Address{})
 
 	if err != nil {
 		return nil, err

@@ -1,8 +1,8 @@
 package router
 
 import (
-	handler "github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/delivery/http"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/delivery/middleware"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/delivery/http"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/delivery/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"

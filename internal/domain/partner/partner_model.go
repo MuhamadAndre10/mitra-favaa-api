@@ -1,11 +1,11 @@
-package model
+package partner
 
 import (
 	utilitas "github.com/andrepriyanto10/favaa_mitra/utils"
 	"gorm.io/gorm"
 )
 
-type Customers struct {
+type User struct {
 	ID           string  `gorm:"primaryKey"`
 	FirstName    string  `gorm:"column:first_name"`
 	LastName     string  `gorm:"column:last_name"`
@@ -18,7 +18,7 @@ type Customers struct {
 }
 
 // BeforeCreate make a hook before insert into database
-func (c *Customers) BeforeCreate(tx *gorm.DB) (err error) {
+func (c *User) BeforeCreate(tx *gorm.DB) (err error) {
 	c.ID = utilitas.NewUUIDString()
 
 	return

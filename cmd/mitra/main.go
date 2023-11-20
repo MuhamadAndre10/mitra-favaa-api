@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	handler "github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/delivery/http"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/repository"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/services"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/delivery/http"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/repository"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/services"
 	"github.com/andrepriyanto10/favaa_mitra/internal/router"
 	"github.com/gofiber/fiber/v2"
 	"log"

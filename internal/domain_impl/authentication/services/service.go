@@ -4,7 +4,8 @@ import (
 	"context"
 	"github.com/andrepriyanto10/favaa_mitra/internal/configs/environment"
 	token_jwt "github.com/andrepriyanto10/favaa_mitra/internal/configs/jwt"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/model"
+	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication"
+	model2 "github.com/andrepriyanto10/favaa_mitra/internal/domain_impl/authentication/utils"
 	"github.com/andrepriyanto10/favaa_mitra/utils"
 	"net/http"
 	"strings"
@@ -12,18 +13,18 @@ import (
 )
 
 type AuthService struct {
-	model.UserRepository
+	authentication.UserRepository
 	timeout time.Duration
 }
 
-func NewAuthService(user model.UserRepository) *AuthService {
+func NewAuthService(user authentication.UserRepository) *AuthService {
 	return &AuthService{
 		UserRepository: user,
 		timeout:        time.Duration(2) * time.Second,
 	}
 }
 
-func (u *AuthService) Register(ctx context.Context, user *model.UserRegisterReq) (*model.UserRegisterResponse, error) {
+func (u *AuthService) Register(ctx context.Context, user *model2.UserRegisterReq) (*model2.UserRegisterResponse, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.timeout)
 	defer cancel()
 
@@ -54,7 +55,7 @@ func (u *AuthService) Register(ctx context.Context, user *model.UserRegisterReq)
 		return nil, &utils.CustomError{Code: http.StatusInternalServerError, Message: "Internal Server Error"}
 	}
 
-	newUser := &model.UserAccounts{
+	newUser := &authentication.UserAccounts{
 		Username:       user.Username,
 		Email:          user.Email,
 		Phone:          user.Phone,
@@ -68,7 +69,7 @@ func (u *AuthService) Register(ctx context.Context, user *model.UserRegisterReq)
 		return nil, &utils.CustomError{Code: http.StatusInternalServerError, Message: "Internal Server Error"}
 	}
 
-	registerRes := &model.UserRegisterResponse{
+	registerRes := &model2.UserRegisterResponse{
 		ID:             userRegistered.ID,
 		Email:          userRegistered.Email,
 		Phone:          userRegistered.Phone,
@@ -79,7 +80,7 @@ func (u *AuthService) Register(ctx context.Context, user *model.UserRegisterReq)
 
 }
 
-func (u *AuthService) FetchUserByEmail(ctx context.Context, email string) (*model.UserAccounts, error) {
+func (u *AuthService) FetchUserByEmail(ctx context.Context, email string) (*authentication.UserAccounts, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.timeout)
 	defer cancel()
 
@@ -99,11 +100,11 @@ func (u *AuthService) FetchUserByEmail(ctx context.Context, email string) (*mode
 	return user, nil
 }
 
-func (u *AuthService) FetchUserByPhone(ctx context.Context, phone string) (model.LoginUserResponse, error) {
+func (u *AuthService) FetchUserByPhone(ctx context.Context, phone string) (model2.LoginUserResponse, error) {
 	panic("implement me")
 }
 
-func (u *AuthService) Login(ctx context.Context, user *model.UserAccounts) (*model.LoginUserResponse, error) {
+func (u *AuthService) Login(ctx context.Context, user *authentication.UserAccounts) (*model2.LoginUserResponse, error) {
 	ctx, cancel := context.WithTimeout(ctx, u.timeout)
 	defer cancel()
 
@@ -117,7 +118,7 @@ func (u *AuthService) Login(ctx context.Context, user *model.UserAccounts) (*mod
 		return nil, &utils.CustomError{Code: http.StatusInternalServerError, Message: "Internal Server Error"}
 	}
 
-	loginRes := &model.LoginUserResponse{
+	loginRes := &model2.LoginUserResponse{
 		Token: token,
 	}
 
