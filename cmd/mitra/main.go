@@ -2,24 +2,49 @@ package main
 
 import (
 	"fmt"
-	handler "github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/delivery/http"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/repository"
-	"github.com/andrepriyanto10/favaa_mitra/internal/domain/authentication/services"
-	"github.com/andrepriyanto10/favaa_mitra/internal/router"
+	"github.com/andrepriyanto10/favaa_mitra/config/database/postgres"
+	"github.com/andrepriyanto10/favaa_mitra/config/environment"
+	"github.com/andrepriyanto10/favaa_mitra/internal/user_account/delivery/http"
+	"github.com/andrepriyanto10/favaa_mitra/internal/user_account/repository"
+	"github.com/andrepriyanto10/favaa_mitra/internal/user_account/service"
+	"github.com/andrepriyanto10/favaa_mitra/router"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
+
+const idleTimeout = 5 * time.Second
 
 func main() {
 
-	db, app := setup()
+	app := fiber.New(fiber.Config{
+		IdleTimeout: idleTimeout,
+	})
+
+	app.Use(logger.New(logger.Config{
+		Format: "${pid} ${status} - ${method} ${path}\n",
+	}))
+
+	app.Use(cors.New())
+
+	cfg, err := env.env.LoadEnv()
+	if err != nil {
+		log.Fatalf("Error Loading environment: %v", err)
+	}
+
+	db, err := postgres.OpenConnection(cfg)
+	if err != nil {
+		log.Panic("fail connect", err)
+	}
 
 	authRepo := repository.NewAuthRepository(db)
 
-	authService := services.NewAuthService(authRepo)
+	authService := service.NewAuthService(authRepo, cfg)
 
 	authHandler := handler.NewAuthHandler(authService)
 
