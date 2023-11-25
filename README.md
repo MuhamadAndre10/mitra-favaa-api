@@ -1,19 +1,19 @@
 # Description this project
 
-ini adalah project golang back-end yang dibuat untuk client otpic semasa pkl perkuliahan dan masih dalam masa pengembangan,
+This is a Golang back-end project created for the OTPIC client during my internship at the university and is still in the development phase.
 
-### Project ini menggunakan
+### This project uses:
 - Framework [Fiber](https://docs.gofiber.io/)
 - [Gorm](https://gorm.io/)
 - [Jwt Token](https://github.com/golang-jwt/jwt)
 - [SendGrid](https://sendgrid.com/en-us)
 
-### Fitur
+### Features:
 - Authentication and Authorization
 - Forgot Password
 - SendMail with sendgrid
 - CRUD
 - ....
 
-> Ini merupakan real project yang masih dalam perkembangan
+> This is a real project that is still in development.
 
