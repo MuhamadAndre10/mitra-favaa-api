@@ -1,0 +1,56 @@
+apa saja yang dibutuhkan?
+
+
+kode referal user
+nama lengkap
+tanggal bergabung
+no hp
+alamat
+nama depan
+nama belakang
+jenis kelamin
+telepon
+alamat
+provinsi
+kabupaten
+lebaksiu
+kodepos
+nama bank
+no rekening
+saldo diterima
+saldo
+jumlah transaksi
+tototal fee
+
+1NF
+
+kode referal user
+tanggal bergabung
+no hp
+alamat
+nama depan
+nama belakang
+jenis kelamin
+telepon
+provinsi
+kota/kabupaten
+kecamatan
+kodepos
+nama bank
+no rekening
+saldo diterima
+saldo
+jumlah transaksi
+total fee
+
+2NF
+
+partner
+nama depan
+nama belakang
+jenis kelamin
+
+
+
+
+
